@@ -1,0 +1,37 @@
+import MySQLdb
+
+####DATABASE CONNECTION
+db=MySQLdb.connect(host="jodebane.mysql.pythonanywhere-services.com",
+                   user="jodebane",
+                   passwd="matad0rs",
+                   db="jodebane$countries",
+
+                   )
+
+
+####Beginning Example
+cursor = db.cursor()
+cursor.execute("""DROP TABLE IF EXISTS countriesdata1""")
+cursor.execute("CREATE TABLE countriesdata1(COUNTRY text, CAPITAL text)")
+cursor.execute("INSERT INTO countriesdata1(COUNTRY, CAPITAL) VALUES ('USA', 'Washington DC')")
+cursor.execute("SELECT * FROM countriesdata1")
+rows = cursor.fetchall()
+for r in rows:
+    print r
+
+#####Add to database
+
+def databaseadd():
+    print "Add a country to the database "
+    country2 = raw_input("Enter a country name   ")
+    capital2 = raw_input ("Enter the country's capital    ")
+    cursor.execute("INSERT INTO countriesdata1(COUNTRY, CAPITAL) VALUES (%s, %s) ", (country2, capital2))
+    cursor.execute("SELECT * FROM countriesdata1")
+    rows = cursor.fetchall()
+    for r in rows:
+        print r
+
+databaseadd()
+
+db.commit()
+
